@@ -5,6 +5,10 @@ exports.LogOutPage = class LogOutPage {
 
         this.page = page
        
-        this.login_button = getByRole('link', { name: 'Logout' })
+        this.logOut_button = page.getByRole('link', { name: 'Logout' })
+    }
+
+    async clickOnLogOut() {
+        await this.logOut_button.click()
     }
 }

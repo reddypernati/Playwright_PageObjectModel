@@ -1,10 +1,13 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../pages/login"
-import { log } from "console";
+import { LogOutPage } from "../pages/logout/"
+import { log } from "node:console";
+
 
 test("Login Page", async ({ page }) => {
 
     const Login = new LoginPage(page)
+    const LogOut = new LogOutPage(page)
 
     await Login.gotoLoginPage();
     //Verify the URL of the page
@@ -44,34 +47,20 @@ test("Login Page", async ({ page }) => {
 
     //Click the Login button
     await Login.clickOnLogin();
-    await page.pause()
 
+    //Verify the URL of the page
+    await expect(page).toHaveURL(/.*secure/);
+    const url1 = await page.url();
+    console.log("The URL is: " + url1);
 
+    //Verify that the name  is Visible.
+    await expect(page.getByRole('heading', { name: 'Secure Area', exact: true })).toBeVisible();
+    const textname = await page.getByRole('heading', { name: 'Secure Area', exact: true }).textContent()
+    console.log("The Visible Text is: " + textname);
 
-
-
-
-
-    // await page.goto("https://the-internet.herokuapp.com/login");
-    // await expect(page).toHaveURL(/.*login/);
-    // const url = await page.url();
-
-    // await expect(page).toHaveTitle("The Internet");
-    // const title = await page.title();
-
-    // await page.getByRole('textbox', { name: 'Username' }).fill("tomsmith");
-    // await expect(page.getByRole('textbox', { name: 'Username' })).toBeVisible("tomsmith");
-
-    // await page.getByRole('textbox', { name: 'Password' }).fill("SuperSecretPassword!");
-    // await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible("SuperSecretPassword!");
-
-    // await expect(page.getByRole('button', { name: ' Login' })).toBeEnabled();
-    // await page.getByRole('button', { name: ' Login' }).click();
-    // await page.pause();
-
-
-    // console.log("The Title is: " + title);
-    // await expect(page).toHaveScreenshot();
-
-    //await page.close();
+    //await expect(page).toHaveScreenshot();
+    
+    //await page.pause();
+    await LogOut.clickOnLogOut();
+    await page.close();
 });
