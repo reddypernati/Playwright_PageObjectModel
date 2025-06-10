@@ -45,7 +45,7 @@ test("Login Page", async ({ page }) => {
     //Verify that the login button is active and clickable.
     await expect(page.getByRole('button', { name: ' Login' })).toBeEnabled();
 
-    //Click the Login button
+    //Click On the Login button
     await Login.clickOnLogin();
 
     //Verify the URL of the page
