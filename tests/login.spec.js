@@ -11,7 +11,8 @@ test("Login Page", async ({ page }) => {
 
     await Login.gotoLoginPage();
     //Verify the URL of the page
-    await expect(page).toHaveURL(/.*login/);
+    //await expect(page).toHaveURL(/.*login/);
+    await expect(page).toHaveURL(/login/);
     const url = await page.url();
     console.log("The URL is: " + url);
 
@@ -25,9 +26,9 @@ test("Login Page", async ({ page }) => {
     await expect(page.getByRole('textbox', { name: 'Username' })).toBeEmpty();
 
     //Enter the username
-    await Login.enterUsername("tomsmith");
-
-    //Verify that the username textbox name is visible.
+    await Login.enterUsername('tomsmith');
+    // await page.getByRole('textbox', { name: 'Username' }).pressSequentially("tomsmith", {delay: 500});
+    //Verify that the username is visible.
     await expect(page.getByRole('textbox', { name: 'Username' })).toBeVisible("tomsmith");
 
     //Verify that the password textbox is empty.
@@ -36,9 +37,9 @@ test("Login Page", async ({ page }) => {
     //Enter the password
     await Login.enterPassword("SuperSecretPassword!");
 
-    //Verify that the password textbox name is visible.
+    //Verify that the password name is visible.
     await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible("SuperSecretPassword!");
-
+    await expect(page.getByRole('textbox', { name: 'Password' })).toHaveValue("SuperSecretPassword!");
     //Verify that the login button is Visible.
     await expect(page.getByRole('button', { name: ' Login' })).toBeVisible();
 
@@ -49,7 +50,8 @@ test("Login Page", async ({ page }) => {
     await Login.clickOnLogin();
 
     //Verify the URL of the page
-    await expect(page).toHaveURL(/.*secure/);
+    //await expect(page).toHaveURL(/.*secure/);
+    await expect(page).toHaveURL(/secure/);
     const url1 = await page.url();
     console.log("The URL is: " + url1);
 
@@ -58,8 +60,13 @@ test("Login Page", async ({ page }) => {
     const textname = await page.getByRole('heading', { name: 'Secure Area', exact: true }).textContent()
     console.log("The Visible Text is: " + textname);
 
+    //Using Relative xpath
+    //await expect(page.locator("//h2[normalize-space()='Secure Area']")).toBeVisible();
+    //const textname = await page.locator("//h2[normalize-space()='Secure Area']").textContent()
+   // console.log("The Visible Text is: " + textname);
+
     //await expect(page).toHaveScreenshot();
-    
+
     //await page.pause();
     await LogOut.clickOnLogOut();
     await page.close();
