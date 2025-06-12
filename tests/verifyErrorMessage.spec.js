@@ -10,7 +10,7 @@ test.only("Verify Error Message", async ({ page }) => {
     console.log("The URL is: " + url);
 
     await expect(page).toHaveTitle(/HRM/)
-    const title = await page.title();
+    const title = await page.title()
     console.log("The Title is: " + title);
     await page.screenshot({ path: 'screenshot.png', fullPage: true });
     console.log("The Width of the Page is: " + await page.viewportSize().width)
