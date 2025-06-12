@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 //test.use({ viewport: { width: 1000, height: 1080 } })
 import { log } from "node:console";
-test.only("Verify Error Message", async ({ page }) => {
+test("Verify Error Message", async ({ page }) => {
 
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
@@ -19,10 +19,14 @@ test.only("Verify Error Message", async ({ page }) => {
     await page.getByPlaceholder("Username").fill("Admin");
     const username = await page.getByPlaceholder("Username").inputValue();
     console.log('The Username is :', username);
+    // Screenshot of the username input field
+    await page.getByPlaceholder("Username").screenshot({ path: 'username.png' });
 
     await page.getByPlaceholder("Password").fill("admin1231");
     const password = await page.getByPlaceholder("Password").inputValue();
     console.log('The Password is :', password);
+    // Screenshot of the password input field
+    await page.getByPlaceholder("Password").screenshot({ path: 'password.png' });
 
     await page.locator("//*[@type='submit']").click();
     const errorMessage = await page.getByText(/credentials/).textContent();
